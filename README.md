@@ -1,4 +1,3 @@
-```markdown
 # 🪐 Portfólio & Currículo Web — Ygor Sampaio
 
 <p align="center">
