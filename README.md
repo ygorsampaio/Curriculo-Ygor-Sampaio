@@ -1,8 +1,8 @@
-# 🪐 Portfólio & Currículo Web — Ygor Sampaio
+# Portfólio & Currículo Web — Ygor Sampaio
 
 Este repositório contém o ecossistema do meu portfólio web pessoal, composto por uma Landing Page minimalista e imersiva conectada a um Currículo Técnico detalhado. O projeto foi desenhado sob a estética **Cyber-Dark** com foco em altíssima performance, fluidez visual e sem a necessidade de scripts adicionais para a interface.
 
-⚡ **Acesse o projeto rodando ao vivo:** [Link do seu deploy aqui (ex: GitHub Pages)]
+⚡ **Acesse o projeto rodando ao vivo:** [https://curriculo-ygor-sampaio.vercel.app/]
 
 ---
 
