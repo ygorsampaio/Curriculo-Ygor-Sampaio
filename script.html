@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br" data-lang="pt">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,7 +22,11 @@
       --border2:     rgba(255,255,255,0.09);
     }
 
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      /* FIX: overflow aqui, não no body, para não quebrar position:sticky do nav */
+      overflow-x: hidden;
+    }
 
     body {
       background: var(--bg);
@@ -31,7 +35,7 @@
       line-height: 1.65;
       font-size: 15px;
       min-height: 100vh;
-      overflow-x: hidden;
+      /* FIX: removido overflow-x:hidden daqui — quebrava sticky em Safari/Firefox */
     }
 
     body::before {
@@ -129,7 +133,8 @@
     .lang-btn.active { background: var(--blue-dim); color: var(--blue); }
     .lang-btn:hover:not(.active) { color: var(--text); }
 
-    .nav-spacer { height: 72px; }
+    /* FIX: nav-spacer alinhado com a altura real do nav (56px) */
+    .nav-spacer { height: 56px; }
 
     /* ── Hero ── */
     .hero {
@@ -268,7 +273,7 @@
     }
     .tag-pill svg { flex-shrink: 0; }
 
-    /* soft pill for interpessoais */
+    /* soft pill para interpessoais */
     .tag-soft {
       display: inline-flex;
       align-items: center;
@@ -453,8 +458,9 @@
           </ul>
         </div>
         <div class="lang-toggle">
-          <button class="lang-btn active" onclick="setLang('pt')">PT</button>
-          <button class="lang-btn" onclick="setLang('en')">EN</button>
+          <!-- FIX: adicionado data-lang em cada botão para comparação segura no setLang -->
+          <button class="lang-btn active" data-lang="pt" onclick="setLang('pt')">PT</button>
+          <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
         </div>
       </div>
     </nav>
@@ -471,7 +477,7 @@
         </h1>
         <p class="hero-bio"
           data-pt="Desenvolvedor de Software focado em transformar dados, código e processos em decisões de negócio. Atuo com sistemas Web (React, Node.js), Dados (Python, SQL, Databricks) e Power Platform, com foco em automação e análise com atuação na residência tecnológica do Porto Digital. Sou estudante do Embarque Digital (ADS) e Administração, acredito que a tecnologia é mais poderosa quando se entende o negócio por trás."
-            data-en="Software Developer focused on transforming data, code, and processes into business decisions. I work with Web systems (React, Node.js), Data (Python, SQL, Databricks), and Power Platform, focusing on automation and analysis, with experience in the tech residency at Porto Digital. I am a student of Embarque Digital (Systems Analysis and Development) and Business Administration, and I believe that technology is more powerful when you understand the business behind it.">
+          data-en="Software Developer focused on transforming data, code, and processes into business decisions. I work with Web systems (React, Node.js), Data (Python, SQL, Databricks), and Power Platform, focusing on automation and analysis, with experience in the tech residency at Porto Digital. I am a student of Embarque Digital (Systems Analysis and Development) and Business Administration, and I believe that technology is more powerful when you understand the business behind it.">
           Desenvolvedor de Software focado em transformar dados, código e processos em decisões de negócio. Atuo com sistemas Web (React, Node.js), Dados (Python, SQL, Databricks) e Power Platform, com foco em automação e análise com atuação na residência tecnológica do Porto Digital. Sou estudante do Embarque Digital (ADS) e Administração, acredito que a tecnologia é mais poderosa quando se entende o negócio por trás.
         </p>
       </div>
@@ -912,13 +918,15 @@
 
   <script>
     function setLang(lang) {
+      // FIX: usa data-lang do botão em vez de textContent para comparação robusta
       document.querySelectorAll('.lang-btn').forEach(b => {
-        b.classList.toggle('active', b.textContent.toLowerCase() === lang);
+        b.classList.toggle('active', b.getAttribute('data-lang') === lang);
       });
       document.querySelectorAll('[data-pt]').forEach(el => {
         const val = el.getAttribute('data-' + lang);
         if (val !== null) el.innerHTML = val;
       });
+      // FIX: atributo lang correto no <html>
       document.documentElement.setAttribute('lang', lang === 'pt' ? 'pt-br' : 'en');
     }
   </script>
